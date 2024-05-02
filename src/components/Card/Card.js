@@ -12,7 +12,8 @@ const BiblioCard = ({ props }) => {
         borderRadius: '2px',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+       
       }}
     >
  {props}

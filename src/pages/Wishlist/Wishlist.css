@@ -2,3 +2,29 @@
     width: 80%; /* Adjust the width as needed */
     margin: 0 auto; /* Center the container */
   }
+  input {
+    background-color: #907;
+  }
+  
+  input::placeholder {
+    color: #fff;
+  }
+  .search-bar input::placeholder {
+    color: white !important; 
+  }
+  .form-control:focus {
+    border-color:black!important; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)!important; /* Add a subtle shadow on focus */
+  }
+  .unread {
+    background-color: green;
+  }
+  
+  .progressing {
+    background-color: orange;
+  }
+  
+  .finished {
+    background-color: red;
+  }
+  

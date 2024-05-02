@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
-import { Table, NavbarBrand, Navbar,Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+
 import { baseURL } from '../../baseURL'
 import './Wishlist.css'; // (Optional) For custom CSS
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Table, Navbar, NavbarBrand, Nav, NavItem, NavLink, Input, InputGroup, Button, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { FaSearch, FaUser } from 'react-icons/fa'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BsJustify } from 'react-icons/bs';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import Logo from '../../asset/images/logo.png';
 const Wishlist = () => {
   const [items, setItems] = useState([]); // Use empty array initially
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,26 +84,48 @@ const Wishlist = () => {
 
   return (
     <div>
-      
-        <Navbar
-          className="my-2"
-          color="dark"
-          dark
-        >
-          <NavbarBrand href="/">
-            <img
-              alt="logo"
-              src="/logo-white.svg"
+      <Navbar color="black" dark expand="md">
+        <NavbarBrand href="/">
+          <img
+            alt="logo"
+            src={Logo}
+            style={{
+              height: 50,
+              width: 50,
+              borderRadius: '50%',
+              marginRight: '20px'
+            }}
+          />
+          <span className="ml-2 text-white">My Readinglist</span>
+        </NavbarBrand>
+        <Nav className="mr-auto" navbar>
+          <InputGroup className="search-bar" style={{ border: 'none', display: 'flex', alignItems: 'center' }}>
+
+            <Input
+              placeholder="Search..."
+              className="search-input"
               style={{
-                height: 40,
-                width: 40
+                backgroundColor: 'transparent',
+                color: 'white',
+                border: 'none',
+                outline: 'none',
+
+                '&::placeholder': {
+                  color: 'white'
+                }
               }}
             />
-          </NavbarBrand>
-        </Navbar>
-      
+            <FaSearch className="search-icon" style={{ color: 'white' }} />
+          </InputGroup>
+        </Nav>
+        <Nav navbar>
+          <NavItem>
+            <NavLink href="#"><FaUser style={{ color: 'white' }} /></NavLink> {/* User icon */}
+          </NavItem>
+        </Nav>
+      </Navbar>
       <div>
-        <h2>My Wishlist</h2>
+
         {isLoading ?
           <p>Loading wishlist...</p>
           :
@@ -113,7 +138,7 @@ const Wishlist = () => {
         className="mb-3"
       /> */}
             <div className="table-container">
-              <Table striped bordered hover>
+              <Table striped bordered hover style={{ marginTop: '10%' }} responsive>
                 <thead>
                   <tr>
                     <th>No</th>
@@ -125,7 +150,13 @@ const Wishlist = () => {
                 </thead>
                 <tbody>
                   {currentItems.map((item, index) => (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      style={{
+                        className:
+                          item.status === 'Unread' ? "table-secondary" : item.status === "table-secondary" ? 'table-secondary' : 'table-secondary',
+                      }}
+                    >
                       <th scope="row">{index + 1}</th>
                       <td>{item && item.bookid.Title}</td>
                       <td>{item && item.bookid.Author}</td>
