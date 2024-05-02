@@ -1,0 +1,19 @@
+.modal-header,
+.modal-body,
+.modal-footer {
+  border: none;
+}
+/* Custom CSS to remove borders in Reactstrap modal */
+.modal-content {
+    border: none; /* Remove border */
+  }
+  
+  .modal-header,
+  .modal-footer {
+    border: none; /* Remove border */
+  }
+  .close {
+    font-size: 20px; /* Adjust font size as desired */
+    cursor: pointer; /* Makes the icon clickable */
+    color: red; /* Adjust color as desired */
+  }

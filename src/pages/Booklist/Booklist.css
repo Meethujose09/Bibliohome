@@ -1,0 +1,47 @@
+.card-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Optionally center the cards horizontally */
+  }
+  
+  .card-row > div {
+    margin: 10px; /* Adjust margin between cards */
+  }
+  .wishlist-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e6495c;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+  }
+  
+  .wishlist-button:hover {
+    background-color: #d23c4a;
+  }
+  
+  .heart {
+    margin-right: 8px;
+  }
+  .cardBody{
+    display: flex;
+    align-items: center;
+  }
+
+
+  .modal-header {
+    border-bottom: 0 none;
+}
+
+.modal-footer {
+    border-top: 0 none;
+}
