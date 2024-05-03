@@ -271,9 +271,9 @@ const Booklist = () => {
         flexWrap: 'wrap',
        
       }}>
-        <Row style={{ display: 'flex', justifyContent: 'center' }}>
+        <Row style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
           {books.map((book, index) => (
-            <Col key={index} md={4} xs={12} className="mb-3">
+            <Col key={index} xs="auto" className="mb-3">
               <Card style={{
                 width: '18rem',
                 border: '1px solid rgba(106, 111, 119, 0.15)',
