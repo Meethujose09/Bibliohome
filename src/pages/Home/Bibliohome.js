@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import Library from '../../asset/images/pic.jpg';
 import './Bibliohome.css';
 function Bibliohome() {

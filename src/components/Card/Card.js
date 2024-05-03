@@ -1,8 +1,5 @@
 import React from 'react';
-import { Card} from 'reactstrap';
-
-
-
+import { Card } from 'reactstrap';
 const BiblioCard = ({ props }) => {
   return (
     <Card
@@ -13,13 +10,10 @@ const BiblioCard = ({ props }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-       
       }}
     >
- {props}
-
+      {props}
     </Card>
   );
 };
-
 export default BiblioCard;

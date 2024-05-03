@@ -45,3 +45,6 @@
 .modal-footer {
     border-top: 0 none;
 }
+.container{
+  padding: 10px !important;
+}

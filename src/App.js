@@ -1,24 +1,15 @@
 
 
-import { BrowserRouter as Router } from "react-router-dom";
-import React,{ useEffect ,useState} from "react";
+
+import React from "react";
 import AppRoute from "./routes/route";
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 function App() {
-
-
-  
-   
-     
-    
   return (
-    
-       
-        <AppRoute />
-      
+    <AppRoute />
   );
 }
-
 export default App;

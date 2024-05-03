@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
-
 import { baseURL } from '../../baseURL'
 import './Wishlist.css'; // (Optional) For custom CSS
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Table, Navbar, NavbarBrand, Nav, NavItem, NavLink, Input, InputGroup, Button, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { FaSearch, FaUser } from 'react-icons/fa'; 
+import { Table, Navbar, NavbarBrand, Nav, NavItem, NavLink, Input, InputGroup, Tooltip, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { FaSearch, FaUser } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { BsJustify } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 import Logo from '../../asset/images/logo.png';
+import bookicon from '../../asset/images/bookicon.png';
+import logout from '../../asset/images/turn-off.png';
+
 const Wishlist = () => {
   const [items, setItems] = useState([]); // Use empty array initially
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchText, setSearchText] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Track loading state
-
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  const tooltoggle = () => setTooltipOpen(!tooltipOpen);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleSearch = (event) => {
-    setSearchText(event.target.value);
-    setItems(
-      items.filter((item) =>
-        item.Title.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.Author.toLowerCase().includes(searchText.toLowerCase())
-        // item.category.toLowerCase().includes(searchText.toLowerCase())
-      )
-    );
+    if (event) {
+      setSearchText(event.target.value);
+      setItems(
+        items.filter((item) =>
+          item && ( // Check if item is defined
+            item.Title.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.Author.toLowerCase().includes(searchText.toLowerCase())
+          )
+        )
+      );
+    }
+
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [items])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +59,49 @@ const Wishlist = () => {
 
     fetchData();
   }, []);
+
+
+  // function for editing the status of the book
+  const editData = (data) => {
+    // code to edit data
+    console.log(data)
+    const inputOptions = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          "Finished": "Finished",
+          "Unread": "Unread",
+          "In Progress": "In Progress"
+        });
+      }, 10);
+    });
+    Swal.fire({
+      title: "Select status",
+      input: "radio",
+      inputOptions,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to select status!";
+        }
+        axios.put(`${baseURL}wishlist/${data._id}`, { status: value }).then((response) => {
+          console.log('edit', response.data)
+          const updatedItems = items.map((item) =>
+            item._id === data._id ? { ...item, status: value } : item
+          );
+          setItems(updatedItems);
+
+          Swal.fire(
+            'Modified!',
+            'Status has been changed.',
+            'success'
+          )
+        })
+          .catch((error) => {
+          });
+      }
+    });
+  }
+
+  //  function for deleting the data from the table
   const deleteData = (id) => {
     // code to delete
     console.log(id)
@@ -69,21 +122,23 @@ const Wishlist = () => {
             'Item has been deleted.',
             'success'
           )
-
         })
           .catch((error) => {
-
           });
-
-
-
       }
     })
   }
 
 
   return (
-    <div>
+    <div style={{
+      backgroundImage: `url("https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=996&t=st=1714730478~exp=1714731078~hmac=70bbd85e7e7c96f4c835d4ffbde27a1e0470b6a927bb1fa0d0ca19305c6cd70f")`,
+      backgroundSize: 'cover', /* Or background-size: contain; */
+      backgroundRepeat: 'no-repeat', /* Optional */
+      backgroundPosition: 'center', /* Optional */
+      minHeight: '100vh', /* Set minimum viewport height */
+
+    }}>
       <Navbar color="black" dark expand="md">
         <NavbarBrand href="/">
           <img
@@ -103,6 +158,7 @@ const Wishlist = () => {
 
             <Input
               placeholder="Search..."
+              onChange={handleSearch}
               className="search-input"
               style={{
                 backgroundColor: 'transparent',
@@ -118,9 +174,45 @@ const Wishlist = () => {
             <FaSearch className="search-icon" style={{ color: 'white' }} />
           </InputGroup>
         </Nav>
-        <Nav navbar>
+        <Nav navbar style={{ display: 'flex', alignItems: 'center' }}>
           <NavItem>
-            <NavLink href="#"><FaUser style={{ color: 'white' }} /></NavLink> {/* User icon */}
+            <a href="/booklist" >
+              <img
+
+                src={bookicon}
+                style={{
+                  height: '30px',
+                  width: '30px',
+                  marginRight: '20px'
+                }}
+                alt="View Readlist"
+                id="smiley-icon"
+                onMouseLeave={tooltoggle}
+                onMouseEnter={tooltoggle}
+              />
+              <Tooltip placement="bottom" isOpen={tooltipOpen} target="smiley-icon">
+                View Booklist
+              </Tooltip>
+            </a>
+
+
+          </NavItem>
+          <NavItem>
+            <a href="/" >
+              <img
+
+                src={logout}
+                style={{
+                  height: '30px',
+                  width: '30px',
+                  marginRight: '20px'
+                }}
+                alt="log out"
+
+              />
+
+            </a>
+
           </NavItem>
         </Nav>
       </Navbar>
@@ -130,13 +222,6 @@ const Wishlist = () => {
           <p>Loading wishlist...</p>
           :
           <div>
-            {/* <Input
-        type="text"
-        placeholder="Search wishlist..."
-        value={searchText}
-        onChange={handleSearch}
-        className="mb-3"
-      /> */}
             <div className="table-container">
               <Table striped bordered hover style={{ marginTop: '10%' }} responsive>
                 <thead>
@@ -144,7 +229,7 @@ const Wishlist = () => {
                     <th>No</th>
                     <th>Title</th>
                     <th>Author</th>
-                    <th>Category</th>
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -162,7 +247,7 @@ const Wishlist = () => {
                       <td>{item && item.bookid.Author}</td>
                       <td>{item && item.status}</td>
                       <td>
-                        <FontAwesomeIcon icon={faPenToSquare} style={{ marginLeft: '20px' }} />
+                        <FontAwesomeIcon icon={faPenToSquare} style={{ marginLeft: '20px' }} onClick={() => { editData(item) }} />
                         <FontAwesomeIcon icon={faTrash} style={{ marginLeft: '30px' }} onClick={() => { deleteData(item._id) }} />
                       </td>
                     </tr>
@@ -195,9 +280,6 @@ const Wishlist = () => {
           </div>
         }
       </div></div>
-
-
-
   );
 };
 

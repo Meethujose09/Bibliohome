@@ -15,27 +15,39 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     line-height: 1.2;
-  }
-  
+}
+
 
 .button {
     display: inline-block;
     padding: 15px 30px;
-    background: linear-gradient(135deg, #6633ff, #cc33ff); /* Gradient background */
-    color: #fff; /* Text color */
-    font-family: 'Roboto', sans-serif; /* Modern sans-serif font */
-    font-size: 1.2rem; /* Font size */
-    font-weight: bold; /* Bold font weight */
-    text-decoration: none; /* Remove default underline */
-    border: none; /* Remove border */
-    border-radius: 30px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s ease; /* Add transition effect */
-  }
-  
-  .button:hover {
-    background: linear-gradient(135deg, #6600ff, #cc00ff); /* Change background gradient on hover */
-  }
+    background: linear-gradient(135deg, #6633ff, #cc33ff);
+    /* Gradient background */
+    color: #fff;
+    /* Text color */
+    font-family: 'Roboto', sans-serif;
+    /* Modern sans-serif font */
+    font-size: 1.2rem;
+    /* Font size */
+    font-weight: bold;
+    /* Bold font weight */
+    text-decoration: none;
+    /* Remove default underline */
+    border: none;
+    /* Remove border */
+    border-radius: 30px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease;
+    /* Add transition effect */
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #6600ff, #cc00ff);
+    /* Change background gradient on hover */
+}
+
 .container {
     display: flex;
     flex-direction: column;
